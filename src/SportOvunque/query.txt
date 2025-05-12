@@ -1,0 +1,15 @@
+SELECT corsi.orario, corsi.durata, corsi.costo, corsi.posti, palestre.nome_palestra FROM corsi JOIN palestre ON corsi.ID_palestra = palestre.ID_palestra WHERE palestre.nome_citta = 'Jesi' AND corsi.giorno = 'Mercoledì';
+
+
+
+SELECT pa.ID_corso, COUNT(pa.email) * c.costo  AS soldi
+FROM partecipazioni pa NATURAL JOIN corsi c 
+WHERE MONTH(pa.data_acquisto) = 5 GROUP BY pa.ID_corso;
+
+
+
+
+
+SELECT p.ID_palestra, p.nome_palestra, COUNT(pa.email) AS prenotazioni
+FROM partecipazioni pa NATURAL JOIN corsi c NATURAL JOIN palestre p
+GROUP BY p.ID_palestra;
