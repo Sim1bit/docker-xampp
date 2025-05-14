@@ -1,0 +1,37 @@
+CREATE TABLE Miele
+(
+    ID_miele INT AUTO_INCREMENT PRIMARY KEY,
+    ID_tipo INT NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    FOREIGN KEY(ID_tipo) REFERENCES Tipologie(ID_tipo)
+    	ON DELETE RESTRICT
+    	ON UPDATE CASCADE
+);
+
+CREATE TABLE Apiari
+(
+    ID_apiario INT AUTO_INCREMENT PRIMARY KEY,
+    mail VARCHAR(50) NOT NULL,
+    regione VARCHAR(50) NOT NULL,
+    provincia VARCHAR(50) NOT NULL,
+    comune VARCHAR(50) NOT NULL,
+    località VARCHAR(50) NOT NULL,
+    FOREIGN KEY(mail) REFERENCES Utenti(mail)
+    	ON DELETE RESTRICT
+    	ON UPDATE CASCADE
+);
+
+CREATE TABLE Produzione
+(
+    ID_apiario INT NOT NULL,
+    anno INT NOT NULL,
+    ID_miele INT NOT NULL,
+    quantita DOUBLE NOT NULL,
+    PRIMARY KEY (ID_apiario, anno),
+    FOREIGN KEY(ID_apiario) REFERENCES Apiari(ID_apiario)
+    	ON DELETE RESTRICT
+    	ON UPDATE CASCADE,
+    FOREIGN KEY(ID_miele) REFERENCES Miele(ID_miele)
+    	ON DELETE RESTRICT
+    	ON UPDATE CASCADE
+);

@@ -15,7 +15,7 @@
                 $_SESSION["email"] = $row["email"];
                 $_SESSION["pwd"] = $row["pwd"];
 
-                header("Location: partecipa.php");
+                header("Location: input_produzione.php");
             }
         }
         else
