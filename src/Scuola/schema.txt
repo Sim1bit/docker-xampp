@@ -1,0 +1,71 @@
+Studenti
+PK(matricola), nome, cognome, pwd
+Professori
+PK(codice), nome, cognome, pwd
+
+Giochi
+PK(ID_gioco), descrizione
+
+Materie
+PK(ID_materia), nome
+
+Classi
+PK(ID_classe), anno, sezione, FK(materia), FK(codice) 
+CREATE TABLE Classi
+(
+    ID_classe INT AUTO_INCREMENT PRIMARY KEY,
+    anno INT NOT NULL,
+    sezione VARCHAR(5) NOT NULL,
+    ID_materia INT,
+    codice VARCHAR(30),
+    FOREIGN KEY (ID_materia) REFERENCES Materie(ID_materia)
+    	ON DELETE CASCADE
+    	ON UPDATE CASCADE,
+    FOREIGN KEY (codice) REFERENCES Docenti(codice)
+    	ON DELETE CASCADE
+    	ON UPDATE CASCADE
+);
+
+Partecipa
+PK(FK(matricola)), PK(FK(ID_classe)), monete
+CREATE TABLE Partecipazioni
+(
+    ID_studente INT NOT NULL,
+    ID_classe INT NOT NULL,
+    entra BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (ID_studente,ID_classe),
+    FOREIGN KEY (ID_studente) REFERENCES Studenti(ID_studente)
+    	ON DELETE CASCADE
+    	ON UPDATE CASCADE,
+    FOREIGN KEY (ID_classe) REFERENCES Classi(ID_classe)
+    	ON DELETE CASCADE
+    	ON UPDATE CASCADE
+);
+Offre
+PK(FK(ID_gioco)), PK(FK(ID_classe))
+CREATE TABLE Offre
+(
+    ID_gioco INT NOT NULL,
+    ID_classe INT NOT NULL,
+    PRIMARY KEY (ID_gioco,ID_classe),
+    FOREIGN KEY (ID_gioco) REFERENCES Giochi(ID_gioco)
+    	ON DELETE CASCADE
+    	ON UPDATE CASCADE,
+    FOREIGN KEY (ID_classe) REFERENCES Classi(ID_classe)
+    	ON DELETE CASCADE
+    	ON UPDATE CASCADE
+);
+
+
+
+
+
+
+
+
+
+
+
+SELECT * FROM Giochi WHERE categoria = 0 ORDER BY descrizione;
+SELECT ID_studente FROM Partecipazioni NATURAL JOIN Offre WHERE ID_classe = "6" AND ID_gioco="1" ORDER BY monete
+SELECT ID_gioco, COUNT(ID_classe)  FROM Offre NATURAL RIGHT JOIN Giochi GROUP BY ID_gioco 
